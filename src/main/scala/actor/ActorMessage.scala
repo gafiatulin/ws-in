@@ -7,4 +7,3 @@ sealed trait ActorMessage
 
 case object Inc extends ActorMessage
 case object Show extends ActorMessage
-case object Shutdown extends ActorMessage

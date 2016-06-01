@@ -34,19 +34,11 @@ object Main extends App with Config {
 
   def wsHandler: Flow[Message, Message, Any] = Flow.fromSinkAndSource(sink, Source.maybe)
 
-  val routes = handleWebSocketMessages(wsHandler) ~
-    pathPrefix("exit") {
-      complete{
-        counter ! Shutdown
-        StatusCodes.OK
-      }
-    } ~ complete{
-      counter ! Inc
-      StatusCodes.OK
-    }
-
+  val routes = handleWebSocketMessages(wsHandler) ~ complete{
+    counter ! Inc
+    StatusCodes.OK
+  }
 
   Http().bindAndHandle(routes, interface, port)
-
 }
 
